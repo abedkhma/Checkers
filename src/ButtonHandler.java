@@ -178,6 +178,7 @@ public class ButtonHandler implements ActionListener {
         int r = gb.getRow();
         int c = gb.getColumn();
 
+
         if (!gb.getIsBlack() && gb.getMoves()[r][c] == 1 || !gb.getIsBlack() && gb.getMoves()[r][c] == -1
                 || gb.getIsBlack() && gb.getMoves()[r][c] == 2 || gb.getIsBlack() && gb.getMoves()[r][c] == -2)
             return false;
