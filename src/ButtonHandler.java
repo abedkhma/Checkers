@@ -102,8 +102,40 @@ public class ButtonHandler implements ActionListener {
         gb.setRow(i);
         gb.setColumn(j);
 
-        //whose turn is it (first blach then white)
-        gb.setBlack(!gb.getIsBlack());
+        //------------ start two steps checking ----------------
+        if (Math.abs(i-row) == 2 ) {
+
+            //checking for black
+            if (gb.getMoves()[i][j] == 1 && i > 1 && j > 2 && j < 6) {
+                    if (!isValidMove(i - 2, j - 2) && !isValidMove(i - 2, j + 2))
+                        gb.setBlack(!gb.getIsBlack());
+               //checking fot white
+            } else if (gb.getMoves()[i][j] == 2 && i < 6) {
+                if (j > 2 && j < 6)
+                    if (!isValidMove(i + 2, j - 2) && !isValidMove(i + 2, j + 2))
+                        gb.setBlack(!gb.getIsBlack());
+
+                //checking fot king
+            } else if ((gb.getMoves()[i][j] == -1 || gb.getMoves()[i][j] == -2) && i < 6 && i > 1) {
+                if ( j < 2) {
+                    if (!isValidMove(i - 2, j + 2) && !isValidMove(i + 2, j + 2))
+                        gb.setBlack(!gb.getIsBlack());
+                }
+                else if (j > 6) {
+                    if (!isValidMove(i - 2, j - 2) && !isValidMove(i + 2, j - 2))
+                        gb.setBlack(!gb.getIsBlack());
+                }else
+                    if (!isValidMove(i - 2, j - 2) && !isValidMove(i + 2, j - 2) &&
+                            !isValidMove(i - 2, j + 2) && !isValidMove(i + 2, j + 2))
+                        gb.setBlack(!gb.getIsBlack());
+
+
+                // if the piece kills another piece but dose not have another move
+            }else gb.setBlack(!gb.getIsBlack());
+            //------------ end start two steps checking ----------------
+
+            //whose turn is it (first blach then white)
+        }else gb.setBlack(!gb.getIsBlack());
 
     }
 
@@ -227,13 +259,13 @@ public class ButtonHandler implements ActionListener {
         if (white == 0){
             JOptionPane.showOptionDialog(null,
                     "Black is the winner\n Would you play again?", "Winner",
-                    JOptionPane.INFORMATION_MESSAGE,
+                    JOptionPane.YES_NO_OPTION,
                     JOptionPane.INFORMATION_MESSAGE,
                     ic,strings,0);
         }else  if (black == 0) {
             JOptionPane.showOptionDialog(null,
                     "White is the winner\n Would you play again?", "Winner",
-                    JOptionPane.INFORMATION_MESSAGE,
+                    JOptionPane.YES_NO_OPTION,
                     JOptionPane.INFORMATION_MESSAGE,
                     ic, strings, 0);
         }
