@@ -106,12 +106,25 @@ public class ButtonHandler implements ActionListener {
         if (Math.abs(i-row) == 2 ) {
 
             //checking for black
-            if (gb.getMoves()[i][j] == 1 && i > 1 && j > 2 && j < 6) {
-                    if (!isValidMove(i - 2, j - 2) && !isValidMove(i - 2, j + 2))
+            if (gb.getMoves()[i][j] == 1 && i > 1 ) {
+                if (j < 2){
+                    if (!isValidMove(i - 2, j + 2))
                         gb.setBlack(!gb.getIsBlack());
+                }else if (j > 6){
+                    if (!isValidMove(i - 2, j - 2))
+                        gb.setBlack(!gb.getIsBlack());
+                }else if (!isValidMove(i - 2, j - 2) && !isValidMove(i - 2, j + 2))
+                    gb.setBlack(!gb.getIsBlack());
+
                //checking fot white
             } else if (gb.getMoves()[i][j] == 2 && i < 6) {
-                if (j > 2 && j < 6)
+                if (j < 2 ){
+                    if (!isValidMove(i + 2, j + 2))
+                        gb.setBlack(!gb.getIsBlack());
+                }else if (j > 6){
+                    if (!isValidMove(i + 2, j - 2))
+                        gb.setBlack(!gb.getIsBlack());
+                }else 
                     if (!isValidMove(i + 2, j - 2) && !isValidMove(i + 2, j + 2))
                         gb.setBlack(!gb.getIsBlack());
 
@@ -241,7 +254,7 @@ public class ButtonHandler implements ActionListener {
 
     /** checking of there any winner in a move */
     private void winner (){
-        int black = 0, white = 0;
+        int black = 0, white = 0 , answer;
         ImageIcon ic = new ImageIcon("/Users/abedkhma/Desktop/game/checkers/355-3556122_4-succeed-vector-trophy-icon-png-clipart.png");
         String[] strings = {"YES","NO"};
 
@@ -257,17 +270,28 @@ public class ButtonHandler implements ActionListener {
                 else if(gb.getMoves()[i][j] == 2 || gb.getMoves()[i][j] == -2)
                     white++;
         if (white == 0){
-            JOptionPane.showOptionDialog(null,
+            answer= JOptionPane.showOptionDialog(null,
                     "Black is the winner\n Would you play again?", "Winner",
                     JOptionPane.YES_NO_OPTION,
                     JOptionPane.INFORMATION_MESSAGE,
                     ic,strings,0);
+            if (answer == JOptionPane.NO_OPTION)
+                System.exit(0);
+            else {
+                new ButtonHandler(new GameBoardGUI());
+            }
+
         }else  if (black == 0) {
-            JOptionPane.showOptionDialog(null,
+             answer = JOptionPane.showOptionDialog(null,
                     "White is the winner\n Would you play again?", "Winner",
                     JOptionPane.YES_NO_OPTION,
                     JOptionPane.INFORMATION_MESSAGE,
                     ic, strings, 0);
+            if (answer == JOptionPane.NO_OPTION)
+                System.exit(0);
+            else {
+                new ButtonHandler(new GameBoardGUI());
+            }
         }
 
     }
@@ -278,11 +302,11 @@ public class ButtonHandler implements ActionListener {
         for (int i = 0; i < 8; i++) {
             for (int j = 0; j < 8; j++) {
                 if (e.getSource() == gb.getButtons()[i][j]) {
-                    System.out.println(gb.getMoves()[i][j]);
                     if (gb.getMoves()[i][j] == 0) {
                         processClick(i, j);
                     }
-                    gb.setButtons(i,j);
+
+                    gb.setBorderButtons(i,j); // set the border
                     gb.setColumn(j);
                     gb.setRow(i);
 
