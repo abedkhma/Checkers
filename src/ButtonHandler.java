@@ -49,22 +49,9 @@ public class ButtonHandler implements ActionListener {
                     gb.setMoves(row - 1, col + 1, 0);
                 }
             }
+            // because both killing in the same way
             else if (gb.getMoves()[row][col] == -1) {
-                if (row - 2 == i && col - 2 == j) {
-                    gb.getButtons()[row - 1][col - 1].setIcon(null);
-                    gb.setMoves(row - 1, col - 1, 0);
-
-                }else if (row + 2 == i && col - 2 == j){
-                    gb.getButtons()[row + 1][col - 1].setIcon(null);
-                    gb.setMoves(row + 1, col - 1, 0);
-                }
-                else if (row + 2 == i && col + 2 == j) {
-                    gb.getButtons()[row + 1][col + 1].setIcon(null);
-                    gb.setMoves(row + 1, col + 1, 0);
-                }else if (row - 2 == i && col + 2 == j){
-                    gb.getButtons()[row - 1][col + 1].setIcon(null);
-                    gb.setMoves(row - 1, col + 1, 0);
-                }
+                kingKill(row,col,i,j);
             }
 
             // remove the icons
@@ -93,22 +80,9 @@ public class ButtonHandler implements ActionListener {
                     gb.getButtons()[row + 1][col + 1].setIcon(null);
                     gb.setMoves(row + 1, col + 1, 0);
                 }
-                // if it kill as whiteKing
+                // because both killing in the same way
             }else if (gb.getMoves()[row][col] == - 2) {
-                if (row + 2 == i && col - 2 == j) {
-                    gb.getButtons()[row + 1][col - 1].setIcon(null);
-                    gb.setMoves(row + 1, col - 1, 0);
-                }else if (row - 2 == i && col - 2 == j) {
-                    gb.getButtons()[row - 1][col - 1].setIcon(null);
-                    gb.setMoves(row - 1, col - 1, 0);
-
-                } else if (row + 2 == i && col + 2 == j) {
-                    gb.getButtons()[row + 1][col + 1].setIcon(null);
-                    gb.setMoves(row + 1, col + 1, 0);
-                }else if (row - 2 == i && col + 2 == j) {
-                    gb.getButtons()[row - 1][col + 1].setIcon(null);
-                    gb.setMoves(row - 1, col + 1, 0);
-                }
+              kingKill(row,col,i,j);
             }
 
             // remove the icons
@@ -120,7 +94,6 @@ public class ButtonHandler implements ActionListener {
             else
                 gb.setMoves(i, j, -2);
         }
-        new MatrixPrint(gb.getMoves());
 
         //set the old place as free
         gb.setMoves(row, col, 0);
@@ -134,8 +107,23 @@ public class ButtonHandler implements ActionListener {
 
     }
 
-    private void kill(int r, int c){
+    private void kingKill(int row, int col, int i, int j){
 
+        if (row - 2 == i && col - 2 == j) {
+            gb.getButtons()[row - 1][col - 1].setIcon(null);
+            gb.setMoves(row - 1, col - 1, 0);
+
+        }else if (row + 2 == i && col - 2 == j){
+            gb.getButtons()[row + 1][col - 1].setIcon(null);
+            gb.setMoves(row + 1, col - 1, 0);
+        }
+        else if (row + 2 == i && col + 2 == j) {
+            gb.getButtons()[row + 1][col + 1].setIcon(null);
+            gb.setMoves(row + 1, col + 1, 0);
+        }else if (row - 2 == i && col + 2 == j){
+            gb.getButtons()[row - 1][col + 1].setIcon(null);
+            gb.setMoves(row - 1, col + 1, 0);
+        }
     }
 
 

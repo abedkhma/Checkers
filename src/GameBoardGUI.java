@@ -78,7 +78,7 @@ public class GameBoardGUI extends JFrame implements ActionListener {
         this.setLayout(new GridLayout(8,8,0,0));
         this.setSize(650,650);
         this.setLocation(320,30);
-
+        this.setResizable(false);
         this.setVisible(true);
     }
 
