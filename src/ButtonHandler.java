@@ -102,7 +102,7 @@ public class ButtonHandler implements ActionListener {
         gb.setRow(i);
         gb.setColumn(j);
 
-        //------------ start two steps checking ----------------
+        //-------------------- start two steps checking ---------------------
         if (Math.abs(i-row) == 2 ) {
 
             //checking for black
@@ -124,7 +124,7 @@ public class ButtonHandler implements ActionListener {
                 }else if (j > 6){
                     if (!isValidMove(i + 2, j - 2))
                         gb.setBlack(!gb.getIsBlack());
-                }else 
+                }else
                     if (!isValidMove(i + 2, j - 2) && !isValidMove(i + 2, j + 2))
                         gb.setBlack(!gb.getIsBlack());
 
@@ -145,13 +145,14 @@ public class ButtonHandler implements ActionListener {
 
                 // if the piece kills another piece but dose not have another move
             }else gb.setBlack(!gb.getIsBlack());
-            //------------ end start two steps checking ----------------
+            //------------------- end start two steps checking ---------------------
 
             //whose turn is it (first blach then white)
         }else gb.setBlack(!gb.getIsBlack());
 
     }
 
+    /** for the king to kill the enemy */
     private void kingKill(int row, int col, int i, int j){
 
         if (row - 2 == i && col - 2 == j) {
@@ -180,7 +181,6 @@ public class ButtonHandler implements ActionListener {
         if (!gb.getIsBlack() && gb.getMoves()[r][c] == 1 || !gb.getIsBlack() && gb.getMoves()[r][c] == -1
                 || gb.getIsBlack() && gb.getMoves()[r][c] == 2 || gb.getIsBlack() && gb.getMoves()[r][c] == -2)
             return false;
-
 
         // --------------------- check move for normal piece --------------------------------
 
@@ -255,7 +255,7 @@ public class ButtonHandler implements ActionListener {
     /** checking of there any winner in a move */
     private void winner (){
         int black = 0, white = 0 , answer;
-        ImageIcon ic = new ImageIcon("/Users/abedkhma/Desktop/game/checkers/355-3556122_4-succeed-vector-trophy-icon-png-clipart.png");
+        ImageIcon ic ;
         String[] strings = {"YES","NO"};
 
         ic = new ImageIcon("icons/winner.png");
@@ -302,11 +302,9 @@ public class ButtonHandler implements ActionListener {
         for (int i = 0; i < 8; i++) {
             for (int j = 0; j < 8; j++) {
                 if (e.getSource() == gb.getButtons()[i][j]) {
-                    if (gb.getMoves()[i][j] == 0) {
+                    if (gb.getMoves()[i][j] == 0)
                         processClick(i, j);
-                    }
 
-                    gb.setBorderButtons(i,j); // set the border
                     gb.setColumn(j);
                     gb.setRow(i);
 

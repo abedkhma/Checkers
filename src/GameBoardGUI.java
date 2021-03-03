@@ -135,10 +135,6 @@ public class GameBoardGUI extends JFrame implements ActionListener {
         this.moves[i][j] = va;
     }
 
-    public void setBorderButtons(int i, int j) {
-        buttons[i][j].setBorder(BorderFactory.createLineBorder(Color.green));
-    }
-
     public void setBlack(boolean black) {
         isBlack = black;
     }
