@@ -29,7 +29,7 @@ public class StartFrame extends JFrame implements ActionListener {
     final URI uri = new URI("https://www.ducksters.com/games/checkers_rules.php");
 
     public StartFrame() throws URISyntaxException {
-        ImageIcon ic = new ImageIcon("icons/ic");
+
 
         text = new JLabel();
         text.setText("<html> <br/> To get familiar with the game rules please press \"HELP\" <br/><br/>" +
@@ -38,8 +38,6 @@ public class StartFrame extends JFrame implements ActionListener {
                 "</html");
         text.setOpaque(true);
         text.setFont(new Font("MV Boli", Font.PLAIN,15));
-        text.setIcon(ic);
-
 
         button = new JButton("Start");
         button.setBounds(250,130,150,50);
