@@ -61,10 +61,8 @@ public class StartFrame extends JFrame implements ActionListener {
         this.setLocation(520,150);
         this.setLayout(null);
         this.setResizable(false);
-
         this.setVisible(true);
     }
-
 
     @Override
     public void actionPerformed(ActionEvent e) {
