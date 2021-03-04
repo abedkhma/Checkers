@@ -110,7 +110,7 @@ public class ButtonHandler implements ActionListener {
                 if (j < 2){
                     if (!isValidMove(i - 2, j + 2))
                         gb.setBlack(!gb.getIsBlack());
-                }else if (j > 6){
+                }else if (j > 5){
                     if (!isValidMove(i - 2, j - 2))
                         gb.setBlack(!gb.getIsBlack());
                 }else if (!isValidMove(i - 2, j - 2) && !isValidMove(i - 2, j + 2))
@@ -121,7 +121,7 @@ public class ButtonHandler implements ActionListener {
                 if (j < 2 ){
                     if (!isValidMove(i + 2, j + 2))
                         gb.setBlack(!gb.getIsBlack());
-                }else if (j > 6){
+                }else if (j > 5){
                     if (!isValidMove(i + 2, j - 2))
                         gb.setBlack(!gb.getIsBlack());
                 }else
@@ -134,7 +134,7 @@ public class ButtonHandler implements ActionListener {
                     if (!isValidMove(i - 2, j + 2) && !isValidMove(i + 2, j + 2))
                         gb.setBlack(!gb.getIsBlack());
                 }
-                else if (j > 6) {
+                else if (j > 5) {
                     if (!isValidMove(i - 2, j - 2) && !isValidMove(i + 2, j - 2))
                         gb.setBlack(!gb.getIsBlack());
                 }else
@@ -272,7 +272,7 @@ public class ButtonHandler implements ActionListener {
                     white++;
         if (white == 0){
             answer= JOptionPane.showOptionDialog(null,
-                    "Black is the winner\n Would you play again?", "Winner",
+                    "Congratulations, The winner is \"Black\"\n Would you like to play again?", "Winner",
                     JOptionPane.YES_NO_OPTION,
                     JOptionPane.INFORMATION_MESSAGE,
                     ic,strings,0);
@@ -284,7 +284,7 @@ public class ButtonHandler implements ActionListener {
 
         }else  if (black == 0) {
              answer = JOptionPane.showOptionDialog(null,
-                    "White is the winner\n Would you play again?", "Winner",
+                    "Congratulations, The winner is \"White\"\n Would you like to play again?", "Winner",
                     JOptionPane.YES_NO_OPTION,
                     JOptionPane.INFORMATION_MESSAGE,
                     ic, strings, 0);
