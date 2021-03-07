@@ -6,7 +6,7 @@ import java.awt.event.ActionListener;
 public class GameBoardGUI extends JFrame implements ActionListener {
 
     private JButton[][] buttons;
-    private int [][] moves;
+    private PiecesType [][] moves;
     private int row = 0, column = 0;
     private ImageIcon black, blackKing;
     private ImageIcon white, whiteKing;
@@ -14,7 +14,7 @@ public class GameBoardGUI extends JFrame implements ActionListener {
 
     public GameBoardGUI() throws HeadlessException {
 
-        moves = new int [8][8];
+        moves = new PiecesType [8][8];
         //because the icon is to big we have to resize it to fit in the our scale
         black = new ImageIcon("icons/unnamed.png");
         Image image = black.getImage();
@@ -62,16 +62,15 @@ public class GameBoardGUI extends JFrame implements ActionListener {
             for (int j = 0; j < 8; j++)
                 if ((i+j) % 2 != 0) {
                     buttons[i][j].setIcon(black);
-                    moves[i][j] = 1;
+                    moves[i][j] = PiecesType.BLACK;
                 }
 
         for (int i = 0; i < 3; i++)
             for (int j = 0; j < 8; j++)
                 if ((i+j) % 2 != 0) {
                     buttons[i][j].setIcon(white);
-                    moves[i][j] = 2;
+                    moves[i][j] = PiecesType.WHITE;
                 }
-
 
         //default setup for the frame to close when we close the widow, size etc...
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -115,7 +114,7 @@ public class GameBoardGUI extends JFrame implements ActionListener {
         return whiteKing;
     }
 
-    public int[][] getMoves() {
+    public PiecesType[][] getMoves() {
         return moves;
     }
 
@@ -131,7 +130,7 @@ public class GameBoardGUI extends JFrame implements ActionListener {
         this.row = row;
     }
 
-    public void setMoves(int i , int j, int va) {
+    public void setMoves(int i , int j, PiecesType va) {
         this.moves[i][j] = va;
     }
 

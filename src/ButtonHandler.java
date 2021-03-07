@@ -21,67 +21,68 @@ public class ButtonHandler implements ActionListener {
             return;
 
         // set the king piece if the enemy reach the end
-        if (gb.getMoves()[row][col] == 1 && i == 0){
+        if (gb.getMoves()[row][col] == PiecesType.BLACK && i == 0){
             gb.getButtons()[i][j].setIcon(gb.getBlackKing());
-            gb.setMoves(row, col, -1);
-        }else if (gb.getMoves()[row][col] == 2 && i == 7){
+            gb.setMoves(row, col, PiecesType.KING_BLACK);
+
+        }else if (gb.getMoves()[row][col] == PiecesType.WHITE && i == 7){
             gb.getButtons()[i][j].setIcon(gb.getWhiteKing());
-            gb.setMoves(row, col, -2);
+            gb.setMoves(row, col, PiecesType.KING_WHITE);
         }
 
         //set the new position as occupied for black
-        if (gb.getMoves()[row][col] == 1 || gb.getMoves()[row][col] == -1) {
+        if (gb.getMoves()[row][col] == PiecesType.BLACK || gb.getMoves()[row][col] == PiecesType.KING_BLACK) {
 
             //which black we play, normal or king
-            if (gb.getMoves()[row][col] == -1)
+            if (gb.getMoves()[row][col] == PiecesType.KING_BLACK)
                 gb.getButtons()[i][j].setIcon(gb.getBlackKing());
             else
                 gb.getButtons()[i][j].setIcon(gb.getBlack());
 
             //if it kill as black
-            if (gb.getMoves()[row][col] == 1) {
+            if (gb.getMoves()[row][col] == PiecesType.BLACK) {
                 if (row - 2 == i && col - 2 == j) {
                     gb.getButtons()[row - 1][col - 1].setIcon(null);
-                    gb.setMoves(row - 1, col - 1, 0);
+                    gb.setMoves(row - 1, col - 1, null);
 
                 } else if (row - 2 == i && col + 2 == j) {
                     gb.getButtons()[row - 1][col + 1].setIcon(null);
-                    gb.setMoves(row - 1, col + 1, 0);
+                    gb.setMoves(row - 1, col + 1, null);
                 }
             }
             // because both killing in the same way
-            else if (gb.getMoves()[row][col] == -1) {
+            else if (gb.getMoves()[row][col] == PiecesType.KING_BLACK) {
                 kingKill(row,col,i,j);
             }
 
             // remove the icons
             gb.getButtons()[row][col].setIcon(null);
 
-            if (gb.getMoves()[row][col] == 1)
-                gb.setMoves(i, j, 1);
-            else  gb.setMoves(i, j, -1);
+            if (gb.getMoves()[row][col] == PiecesType.BLACK)
+                gb.setMoves(i, j, PiecesType.BLACK);
+            else  gb.setMoves(i, j, PiecesType.KING_BLACK);
         }
 
         //set the new position as occupied for white
         else {
             //which black we play, normal or king
-            if (gb.getMoves()[row][col] == -2)
+            if (gb.getMoves()[row][col] == PiecesType.KING_WHITE)
                 gb.getButtons()[i][j].setIcon(gb.getWhiteKing());
             else
                 gb.getButtons()[i][j].setIcon(gb.getWhite());
 
             //if it kill as white
-            if (gb.getMoves()[row][col] == 2) {
+            if (gb.getMoves()[row][col] == PiecesType.WHITE) {
                 if (row + 2 == i && col - 2 == j) {
                     gb.getButtons()[row + 1][col - 1].setIcon(null);
-                    gb.setMoves(row + 1, col - 1, 0);
+                    gb.setMoves(row + 1, col - 1, null);
 
                 } else if (row + 2 == i && col + 2 == j) {
                     gb.getButtons()[row + 1][col + 1].setIcon(null);
-                    gb.setMoves(row + 1, col + 1, 0);
+                    gb.setMoves(row + 1, col + 1, null);
                 }
                 // because both killing in the same way
-            }else if (gb.getMoves()[row][col] == - 2) {
+            }else if (gb.getMoves()[row][col] == PiecesType.KING_WHITE) {
               kingKill(row,col,i,j);
             }
 
@@ -89,14 +90,14 @@ public class ButtonHandler implements ActionListener {
             gb.getButtons()[row][col].setIcon(null);
 
             //update the move matrix
-            if (gb.getMoves()[row][col] == 2)
-                gb.setMoves(i, j, 2);
+            if (gb.getMoves()[row][col] == PiecesType.WHITE)
+                gb.setMoves(i, j, PiecesType.WHITE);
             else
-                gb.setMoves(i, j, -2);
+                gb.setMoves(i, j, PiecesType.KING_WHITE);
         }
 
         //set the old place as free
-        gb.setMoves(row, col, 0);
+        gb.setMoves(row, col, null);
 
         //update the row and the column
         gb.setRow(i);
@@ -106,7 +107,7 @@ public class ButtonHandler implements ActionListener {
         if (Math.abs(i-row) == 2 ) {
 
             //checking for black
-            if (gb.getMoves()[i][j] == 1 && i > 1 ) {
+            if (gb.getMoves()[i][j] == PiecesType.BLACK && i > 1 ) {
                 if (j < 2){
                     if (!isValidMove(i - 2, j + 2))
                         gb.setBlack(!gb.getIsBlack());
@@ -117,7 +118,7 @@ public class ButtonHandler implements ActionListener {
                     gb.setBlack(!gb.getIsBlack());
 
                //checking fot white
-            } else if (gb.getMoves()[i][j] == 2 && i < 6) {
+            } else if (gb.getMoves()[i][j] == PiecesType.WHITE && i < 6) {
                 if (j < 2 ){
                     if (!isValidMove(i + 2, j + 2))
                         gb.setBlack(!gb.getIsBlack());
@@ -129,7 +130,7 @@ public class ButtonHandler implements ActionListener {
                         gb.setBlack(!gb.getIsBlack());
 
                 //checking fot king
-            } else if ((gb.getMoves()[i][j] == -1 || gb.getMoves()[i][j] == -2) && i < 6 && i > 1) {
+            } else if ((gb.getMoves()[i][j] == PiecesType.KING_BLACK || gb.getMoves()[i][j] == PiecesType.KING_WHITE) && i < 6 && i > 1) {
                 if ( j < 2) {
                     if (!isValidMove(i - 2, j + 2) && !isValidMove(i + 2, j + 2))
                         gb.setBlack(!gb.getIsBlack());
@@ -157,18 +158,18 @@ public class ButtonHandler implements ActionListener {
 
         if (row - 2 == i && col - 2 == j) {
             gb.getButtons()[row - 1][col - 1].setIcon(null);
-            gb.setMoves(row - 1, col - 1, 0);
+            gb.setMoves(row - 1, col - 1, null);
 
         }else if (row + 2 == i && col - 2 == j){
             gb.getButtons()[row + 1][col - 1].setIcon(null);
-            gb.setMoves(row + 1, col - 1, 0);
+            gb.setMoves(row + 1, col - 1, null);
         }
         else if (row + 2 == i && col + 2 == j) {
             gb.getButtons()[row + 1][col + 1].setIcon(null);
-            gb.setMoves(row + 1, col + 1, 0);
+            gb.setMoves(row + 1, col + 1, null);
         }else if (row - 2 == i && col + 2 == j){
             gb.getButtons()[row - 1][col + 1].setIcon(null);
-            gb.setMoves(row - 1, col + 1, 0);
+            gb.setMoves(row - 1, col + 1, null);
         }
     }
 
@@ -179,74 +180,74 @@ public class ButtonHandler implements ActionListener {
         int c = gb.getColumn();
 
 
-        if (!gb.getIsBlack() && gb.getMoves()[r][c] == 1 || !gb.getIsBlack() && gb.getMoves()[r][c] == -1
-                || gb.getIsBlack() && gb.getMoves()[r][c] == 2 || gb.getIsBlack() && gb.getMoves()[r][c] == -2)
+        if (!gb.getIsBlack() && gb.getMoves()[r][c] == PiecesType.BLACK || !gb.getIsBlack() && gb.getMoves()[r][c] == PiecesType.KING_BLACK
+                || gb.getIsBlack() && gb.getMoves()[r][c] == PiecesType.WHITE || gb.getIsBlack() && gb.getMoves()[r][c] == PiecesType.KING_WHITE)
             return false;
 
         // --------------------- check move for normal piece --------------------------------
 
         // check move for black
-        if (gb.getMoves()[r][c] == 1 && gb.getMoves()[i][j] == 0) {
+        if (gb.getMoves()[r][c] == PiecesType.BLACK && gb.getMoves()[i][j] == null) {
             if (r - i == 1 && Math.abs(j - c) == 1)
                 return true;
             if (r - 2 == i && c - 2 == j)
-                if (gb.getMoves()[r - 1][c - 1] == 2 || gb.getMoves()[r - 1][c - 1] == -2)
+                if (gb.getMoves()[r - 1][c - 1] == PiecesType.WHITE || gb.getMoves()[r - 1][c - 1] == PiecesType.KING_WHITE)
                     return true;
             if (r - 2 == i && c + 2 == j)
-                if(gb.getMoves()[r - 1][c + 1] == 2 || gb.getMoves()[r - 1][c + 1] == -2)
+                if(gb.getMoves()[r - 1][c + 1] == PiecesType.WHITE || gb.getMoves()[r - 1][c + 1] == PiecesType.KING_WHITE)
                     return true;
 
             //check move for white
-        } else if (gb.getMoves()[r][c] == 2 && gb.getMoves()[i][j] == 0) {
+        } else if (gb.getMoves()[r][c] == PiecesType.WHITE && gb.getMoves()[i][j] == null) {
             if (i - r == 1 && Math.abs(j - c) == 1)
                 return true;
             if (r + 2 == i && c - 2 == j)
-                if(gb.getMoves()[r + 1][c - 1] == 1 || gb.getMoves()[r + 1][c - 1] == -1)
+                if(gb.getMoves()[r + 1][c - 1] == PiecesType.BLACK || gb.getMoves()[r + 1][c - 1] == PiecesType.KING_BLACK)
                     return true;
             if (r + 2 == i && c + 2 == j)
-                if (gb.getMoves()[r + 1][c + 1] == 1 || gb.getMoves()[r + 1][c + 1] == -1)
+                if (gb.getMoves()[r + 1][c + 1] == PiecesType.BLACK || gb.getMoves()[r + 1][c + 1] == PiecesType.KING_BLACK)
                     return true;
 
         // --------------------- check move for king piece --------------------------------
 
             // check move for kingBlack
-        } else if (gb.getMoves()[r][c] == -1 && gb.getMoves()[i][j] == 0) {
+        } else if (gb.getMoves()[r][c] == PiecesType.KING_BLACK && gb.getMoves()[i][j] == null) {
             //checking for normal move
             if (Math.abs(r - i) == 1 && Math.abs(j - c) == 1)
                 return true;
             //checking for kill move
             if (r - 2 == i && c - 2 == j){
-                if (gb.getMoves()[r - 1][c - 1] == 2 || gb.getMoves()[r - 1][c - 1] == -2)
+                if (gb.getMoves()[r - 1][c - 1] == PiecesType.WHITE || gb.getMoves()[r - 1][c - 1] == PiecesType.KING_WHITE)
                     return true;
             }else if (r - 2 == i && c + 2 == j){
-                if (gb.getMoves()[r - 1][c + 1] == 2 || gb.getMoves()[r - 1][c + 1] == -2)
+                if (gb.getMoves()[r - 1][c + 1] == PiecesType.WHITE || gb.getMoves()[r - 1][c + 1] == PiecesType.KING_WHITE)
                     return true;
             }else if (r + 2 == i && c - 2 == j){
-               if (gb.getMoves()[r + 1][c - 1] == 2 || gb.getMoves()[r + 1][c - 1] == -2)
+               if (gb.getMoves()[r + 1][c - 1] == PiecesType.WHITE || gb.getMoves()[r + 1][c - 1] == PiecesType.KING_WHITE)
                    return true;
             }else if (r + 2 == i && c + 2 == j){
-                if (gb.getMoves()[r + 1][c + 1] == 2 || gb.getMoves()[r + 1][c + 1] == -2)
+                if (gb.getMoves()[r + 1][c + 1] == PiecesType.WHITE || gb.getMoves()[r + 1][c + 1] == PiecesType.KING_WHITE)
                     return true;
             }
 
             // check move for whiteKing
-        } else if (gb.getMoves()[r][c] == -2 && gb.getMoves()[i][j] == 0) {
+        } else if (gb.getMoves()[r][c] == PiecesType.KING_WHITE && gb.getMoves()[i][j] == null) {
 
             //checking for normal move
             if (Math.abs(i - r) == 1 && Math.abs(j - c) == 1)
                 return true;
             //checking for kill move
             if (r - 2 == i && c - 2 == j){
-                if (gb.getMoves()[r - 1][c - 1] == 1 || gb.getMoves()[r - 1][c - 1] == -1)
+                if (gb.getMoves()[r - 1][c - 1] == PiecesType.BLACK || gb.getMoves()[r - 1][c - 1] == PiecesType.KING_BLACK)
                     return true;
             }else if (r - 2 == i && c + 2 == j){
-                if (gb.getMoves()[r - 1][c + 1] == 1 || gb.getMoves()[r - 1][c + 1] == -1)
+                if (gb.getMoves()[r - 1][c + 1] == PiecesType.BLACK || gb.getMoves()[r - 1][c + 1] == PiecesType.KING_BLACK)
                     return true;
             }else if (r + 2 == i && c - 2 == j){
-                if (gb.getMoves()[r + 1][c - 1] == 1 || gb.getMoves()[r + 1][c - 1] == -1)
+                if (gb.getMoves()[r + 1][c - 1] == PiecesType.BLACK || gb.getMoves()[r + 1][c - 1] == PiecesType.KING_BLACK)
                     return true;
             }else if (r + 2 == i && c + 2 == j){
-                if (gb.getMoves()[r + 1][c + 1] == 1 || gb.getMoves()[r + 1][c + 1] == -1)
+                if (gb.getMoves()[r + 1][c + 1] == PiecesType.BLACK || gb.getMoves()[r + 1][c + 1] == PiecesType.KING_BLACK)
                     return true;
             }
         }
@@ -266,9 +267,9 @@ public class ButtonHandler implements ActionListener {
 
         for (int i = 0; i < 8; i++)
             for (int j = 0; j < 8; j++)
-                if(gb.getMoves()[i][j] == 1 || gb.getMoves()[i][j] == -1)
+                if(gb.getMoves()[i][j] == PiecesType.BLACK || gb.getMoves()[i][j] == PiecesType.KING_BLACK)
                     black ++;
-                else if(gb.getMoves()[i][j] == 2 || gb.getMoves()[i][j] == -2)
+                else if(gb.getMoves()[i][j] == PiecesType.WHITE || gb.getMoves()[i][j] == PiecesType.KING_WHITE)
                     white++;
         if (white == 0){
             answer= JOptionPane.showOptionDialog(null,
@@ -303,7 +304,7 @@ public class ButtonHandler implements ActionListener {
         for (int i = 0; i < 8; i++) {
             for (int j = 0; j < 8; j++) {
                 if (e.getSource() == gb.getButtons()[i][j]) {
-                    if (gb.getMoves()[i][j] == 0)
+                    if (gb.getMoves()[i][j] == null)
                         processClick(i, j);
 
                     gb.setColumn(j);
