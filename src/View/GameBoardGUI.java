@@ -1,3 +1,8 @@
+package View;
+
+import Controller.ButtonHandler;
+import Model.*;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -11,11 +16,23 @@ public class GameBoardGUI extends JFrame implements ActionListener {
     private ImageIcon black, blackKing;
     private ImageIcon white, whiteKing;
     private boolean isBlack = true;
+    BlackPiece blackPiece;
+    WhitePiece whitePiece;
+    KingBlack kingBlack;
+    KingWhite kingWhite;
 
     public GameBoardGUI() throws HeadlessException {
 
-        moves = new PiecesType [8][8];
+        blackPiece = new BlackPiece(this);
+        whitePiece = new WhitePiece(this);
+        kingBlack = new KingBlack(this);
+        kingWhite = new KingWhite(this);
+
+        moves = new PiecesType[8][8];
+        buttons = new JButton[8][8];
+
         //because the icon is to big we have to resize it to fit in the our scale
+        //-------------------------Resize the Icons-----------------------------
         black = new ImageIcon("icons/unnamed.png");
         Image image = black.getImage();
         Image newimg = image.getScaledInstance(60, 60,  java.awt.Image.SCALE_SMOOTH);
@@ -35,11 +52,11 @@ public class GameBoardGUI extends JFrame implements ActionListener {
         Image image2king = whiteKing.getImage();
         Image newimg2king = image2king.getScaledInstance(60, 60,  java.awt.Image.SCALE_SMOOTH);
         whiteKing = new ImageIcon(newimg2king);
+        //-------------------------Resize the Icons-----------------------------
 
 
-        buttons = new JButton[8][8];
 
-        //initialize the buttons and there colors
+        //--------------initialize the buttons and there colors----------------
         for (int i = 0; i < 8; i++) {
             for (int j = 0; j < 8; j++) {
                 buttons[i][j] = new JButton();
@@ -56,8 +73,10 @@ public class GameBoardGUI extends JFrame implements ActionListener {
                 buttons[i][j].addActionListener(new ButtonHandler(this));
             }
         }
+        //--------------initialize the buttons and there colors----------------
 
         //put the icons of the checkers each one to there right place
+        //--------------------to position the pieces----------------------
         for (int i = 5; i < 8; i++)
             for (int j = 0; j < 8; j++)
                 if ((i+j) % 2 != 0) {
@@ -71,6 +90,7 @@ public class GameBoardGUI extends JFrame implements ActionListener {
                     buttons[i][j].setIcon(white);
                     moves[i][j] = PiecesType.WHITE;
                 }
+        //--------------------to position the pieces----------------------
 
         //default setup for the frame to close when we close the widow, size etc...
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -116,6 +136,22 @@ public class GameBoardGUI extends JFrame implements ActionListener {
 
     public PiecesType[][] getMoves() {
         return moves;
+    }
+
+    public BlackPiece getBlackPiece() {
+        return blackPiece;
+    }
+
+    public KingBlack getKingBlack() {
+        return kingBlack;
+    }
+
+    public KingWhite getKingWhite() {
+        return kingWhite;
+    }
+
+    public WhitePiece getWhitePiece() {
+        return whitePiece;
     }
 
     public boolean getIsBlack() {

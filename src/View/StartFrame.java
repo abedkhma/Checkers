@@ -1,3 +1,7 @@
+package View;
+
+import View.GameBoardGUI;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -68,7 +72,7 @@ public class StartFrame extends JFrame implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == button) {
             this.dispose(); // after opining the new window the frame will be closed
-            new ButtonHandler(new GameBoardGUI());
+            new GameBoardGUI();
         }
     }
 }
