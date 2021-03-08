@@ -91,7 +91,7 @@ public abstract class  Pieces {
                     !isValidMove(i - 2, j + 2) && !isValidMove(i + 2, j + 2))
                 gb.setBlack(!gb.getIsBlack());
 
-            //if the king kill at the edges and have another piece to kill 
+            //if the king kill at the edges and have another piece to kill
         }else if (gb.getMoves()[i][j] == PiecesType.KING_BLACK || gb.getMoves()[i][j] == PiecesType.KING_WHITE) {
             if (i <= 1) {
                 if (j < 2) {
