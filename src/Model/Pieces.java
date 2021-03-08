@@ -76,26 +76,44 @@ public abstract class  Pieces {
             }else if (j > 5){
                 if (!isValidMove(i + 2, j - 2))
                     gb.setBlack(!gb.getIsBlack());
-            }else
-            if (!isValidMove(i + 2, j - 2) && !isValidMove(i + 2, j + 2))
+            }else if (!isValidMove(i + 2, j - 2) && !isValidMove(i + 2, j + 2))
                 gb.setBlack(!gb.getIsBlack());
 
             //checking fot king
         } else if ((gb.getMoves()[i][j] == PiecesType.KING_BLACK || gb.getMoves()[i][j] == PiecesType.KING_WHITE) && i < 6 && i > 1) {
-            if ( j < 2) {
+            if (j < 2) {
                 if (!isValidMove(i - 2, j + 2) && !isValidMove(i + 2, j + 2))
                     gb.setBlack(!gb.getIsBlack());
-            }
-            else if (j > 5) {
+            } else if (j > 5) {
                 if (!isValidMove(i - 2, j - 2) && !isValidMove(i + 2, j - 2))
                     gb.setBlack(!gb.getIsBlack());
-            }else
-            if (!isValidMove(i - 2, j - 2) && !isValidMove(i + 2, j - 2) &&
+            } else if (!isValidMove(i - 2, j - 2) && !isValidMove(i + 2, j - 2) &&
                     !isValidMove(i - 2, j + 2) && !isValidMove(i + 2, j + 2))
                 gb.setBlack(!gb.getIsBlack());
 
-            // if the piece kills another piece but dose not have another move
-        }else gb.setBlack(!gb.getIsBlack());
+            //if the king kill at the edges and have another piece to kill 
+        }else if (gb.getMoves()[i][j] == PiecesType.KING_BLACK || gb.getMoves()[i][j] == PiecesType.KING_WHITE) {
+            if (i <= 1) {
+                if (j < 2) {
+                    if (!isValidMove(i + 2, j + 2))
+                        gb.setBlack(!gb.getIsBlack());
+                } else if (j > 5) {
+                    if (!isValidMove(i + 2, j - 2))
+                        gb.setBlack(!gb.getIsBlack());
+                } else if (!isValidMove(i + 2, j + 2) && !isValidMove(i + 2, j - 2))
+                    gb.setBlack(!gb.getIsBlack());
+            } else if (i >= 5) {
+                if (j < 2) {
+                    if (!isValidMove(i - 2, j + 2))
+                        gb.setBlack(!gb.getIsBlack());
+                } else if (j > 5) {
+                    if (!isValidMove(i - 2, j - 2))
+                        gb.setBlack(!gb.getIsBlack());
+                } else if (!isValidMove(i - 2, j + 2) && !isValidMove(i - 2, j - 2))
+                    gb.setBlack(!gb.getIsBlack());
+            }
+        }// if the piece kills another piece but dose not have another move
+        else gb.setBlack(!gb.getIsBlack());
     }
 
     /** checking of there any winner in a move */
